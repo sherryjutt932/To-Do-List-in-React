@@ -2,14 +2,19 @@ import { Component, useEffect, useState } from "react";
 import "./App.css";
 import { form } from "react";
 import ReduxExp from "./components/reduxExp"
+import { toast } from 'wc-toast'
+import * as toastAlert from "./components/ToastAlert"
 
 function App() {
   const [ToDoList, SetToDoList] = useState([]);
 
   function deletetasks() {
     SetToDoList((current) => current.filter((task) => task.status === false));
+    if(ToDoList.length!=0){
+      toastAlert.handleErrorToast("Task Deleted!");
+    }
   }
-
+  
   function updatetasks(status,id,name) {
     SetToDoList(existingItems => {
       return [
@@ -31,7 +36,7 @@ function App() {
           <h2>Delete Task</h2>
           <p>Only Checked tasks will be deleted</p>
           <div className="field3 subbutton">
-            <button type="submit" onClick={() => deletetasks()}>
+            <button type="submit" onClick={deletetasks}>
               Delete
             </button>
           </div>
@@ -73,6 +78,8 @@ function App() {
         status: false,
       },
     ]);
+    toastAlert.handleSuccessToast("Task Created!");
+
   };
 
   if(ToDoList.length === 0){

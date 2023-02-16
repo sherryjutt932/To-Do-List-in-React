@@ -2,6 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../state/index";
+// import { useEffect } from "react";
+import { toast } from 'wc-toast'
+import * as toastAlert from "./ToastAlert"
+
 
 function ReduxExp() {
   const dispatch = useDispatch();
@@ -10,6 +14,9 @@ function ReduxExp() {
     dispatch
   );
   const amount = useSelector((state) => state.amount);
+  const handleCloseToast = () => {
+    toast('What!', { closeable: true });
+  };
 
   return (
     <div>
@@ -17,16 +24,20 @@ function ReduxExp() {
       <div className="btnbox">
         deposit(1)
         <button
+          className="toast"
           onClick={() => {
             depositMoney(1);
+            toastAlert.handleSuccessToast("Money Deposit!");
           }}
         >
           +
         </button>
         Withdraw(1)
         <button
+          className="toast"
           onClick={() => {
             withdrawMoney(1);
+            toastAlert.handleErrorToast("Money Withdraw!");;
           }}
         >
           -
