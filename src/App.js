@@ -1,29 +1,10 @@
 import { Component, useEffect, useState } from "react";
 import "./App.css";
 import { form } from "react";
+import ReduxExp from "./components/reduxExp"
 
 function App() {
-  const [ToDoList, SetToDoList] = useState([
-    // {
-    //   id: 0,
-    //   name: "task 1",
-    //   status: false,
-    // },
-  ]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    let var1 = document.getElementById("name").value;
-
-    SetToDoList((oldArray) => [
-      ...oldArray,
-      {
-        id: ToDoList.length,
-        name: var1,
-        status: false,
-      },
-    ]);
-  };
+  const [ToDoList, SetToDoList] = useState([]);
 
   function deletetasks() {
     SetToDoList((current) => current.filter((task) => task.status === false));
@@ -40,15 +21,7 @@ function App() {
         },
         ...existingItems.slice(id + 1),
       ]
-    });
-    // SetToDoList((oldArray) => [
-    //   ...oldArray,
-    //   {
-    //     id: id,
-    //     name: name,
-    //     status: (status=="on")?true:false,
-    //   },
-    // ]);
+    }); 
   }
 
   function DeleteTask() {
@@ -88,7 +61,21 @@ function App() {
     );
   }
 
-  if(ToDoList.length == 0){
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let var1 = document.getElementById("name").value;
+
+    SetToDoList((oldArray) => [
+      ...oldArray,
+      {
+        id: ToDoList.length,
+        name: var1,
+        status: false,
+      },
+    ]);
+  };
+
+  if(ToDoList.length === 0){
     return (
       <>
         <div className="App">
@@ -100,6 +87,7 @@ function App() {
           <CreateTask />
           <DeleteTask />
           </div>
+          <ReduxExp />
         </div>
       </>
     );
@@ -116,8 +104,7 @@ function App() {
               <p >{item.name}
               <input
                 type="checkbox"
-                checked={item.status?true:false}
-                value={item.status?"off":"on"}
+                checked={item.status?true:false} 
                 onChange={e => updatetasks(!item.status, item.id, item.name)}
               />
               </p>
@@ -128,6 +115,7 @@ function App() {
         <CreateTask />
         <DeleteTask />
         </div>
+        <ReduxExp />
       </div>
     </>
   );
